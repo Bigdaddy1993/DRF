@@ -30,3 +30,4 @@ class CourseSerializer(serializers.ModelSerializer):
         if Lesson.objects.filter(course=instance):
             return Lesson.objects.filter(course=instance).count()
         return 'нет уроков в этом курсе'
+
