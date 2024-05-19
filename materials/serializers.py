@@ -1,12 +1,14 @@
 from rest_framework import serializers
 
-from materials.models import Course, Lesson
+from materials.models import Course, Lesson, Subscribe
+from materials.validators import UrlValidator
 
 
 class LessonSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lesson
         fields = "__all__"
+        validators = [UrlValidator(field='video_url')]
 
 
 # class CourseSerializer(serializers.ModelSerializer):
@@ -31,3 +33,8 @@ class CourseSerializer(serializers.ModelSerializer):
             return Lesson.objects.filter(course=instance).count()
         return 'нет уроков в этом курсе'
 
+
+class SubscribeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Subscribe
+        fields = "__all__"
