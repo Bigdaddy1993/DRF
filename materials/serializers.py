@@ -23,6 +23,7 @@ class LessonSerializer(serializers.ModelSerializer):
 class CourseSerializer(serializers.ModelSerializer):
     lesson_count = serializers.SerializerMethodField()
     lesson = LessonSerializer(source='lesson_set', many=True, read_only=True)
+    subscribe = serializers.SerializerMethodField()
 
     class Meta:
         model = Course
@@ -32,6 +33,10 @@ class CourseSerializer(serializers.ModelSerializer):
         if Lesson.objects.filter(course=instance):
             return Lesson.objects.filter(course=instance).count()
         return 'нет уроков в этом курсе'
+
+    def get_subscribe(self, instance):
+        user = self.context.get("request").user
+        return Subscribe.objects.all().filter(user=user).filter(course=instance).exists()
 
 
 class SubscribeSerializer(serializers.ModelSerializer):
