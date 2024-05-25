@@ -14,6 +14,9 @@ class Course(models.Model):
         verbose_name = "Курс"
         verbose_name_plural = "Курсы"
 
+    def __str__(self):
+        return self.title
+
 
 class Lesson(models.Model):
     title = models.CharField(max_length=100, verbose_name="название")
@@ -28,6 +31,9 @@ class Lesson(models.Model):
         **NULLABLE
     )
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Subscribe(models.Model):
