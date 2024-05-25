@@ -7,13 +7,11 @@ load_dotenv()
 stripe.api_key = os.getenv("STRIPE_API_KEY")
 
 
-def create_stripe_product(product_name):
+def create_stripe_product(name):
     """Создание продукта"""
-    stripe_product = stripe.Product.create(
-        name="product_name"
-    )  # если вставить в параметр name=product_name вылетает ошибка в постмане
-    # Missing required param: name. поэтому сделал так
-    return stripe_product
+    return stripe.Product.create(
+        name=f'{name}'
+    )
 
 
 def create_stripe_price(amount, product):
