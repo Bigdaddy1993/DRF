@@ -46,6 +46,11 @@ class CourseViewSet(viewsets.ModelViewSet):
         elif self.request.user.groups.filter(name='moderator'):
             return Course.objects.all()
 
+    def perform_update(self, serializer):
+        course = serializer.save()
+        course_id = course.id
+        send_update.delay(course_id)
+
 
 class LessonCreateApiView(CreateAPIView):
     """
